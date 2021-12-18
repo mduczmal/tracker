@@ -32,7 +32,18 @@ fun callYahoo() {
     println(json.quoteResponse.result[0].regularMarketPrice.toBigDecimal())
 }
 
+fun callOpenSea() {
+    val client = OkHttpClient()
+    val request = Request.Builder()
+        .url("https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20")
+        .get()
+        .build();
+    val response = client.newCall(request).execute();
+    val body = response.body?.string() ?: throw RuntimeException("No response body")
+    println(body)
+}
+
 
 fun main(args: Array<String>) {
-    callYahoo()
+    callOpenSea()
 }
